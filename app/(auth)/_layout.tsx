@@ -4,9 +4,9 @@ import { useEffect } from "react";
 
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
+export default function AuthLayout() {
   const [fontsLoaded, error] = useFonts({
-    "Space-Mono": require("../assets/fonts/SpaceMono-Regular.ttf"),
+    "Space-Mono": require("../../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
   useEffect(() => {
@@ -18,12 +18,11 @@ export default function RootLayout() {
   return (
     <Stack>
       <Stack.Screen
-        name="index"
+        name="sign-in"
         options={{
           headerShown: false,
         }}
       />
-  <Stack.Screen name="(auth)" options={{ headerShown: false }} />
     </Stack>
   );
 }
