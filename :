@@ -4,8 +4,8 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
+  Image,
   TextInput,
-  KeyboardAvoidingView,
 } from "react-native";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -27,7 +27,7 @@ export default function Index() {
       if (value) {
         const publicAddress = ethers.computeAddress(value);
         setCreds(publicAddress);
-        console.log(publicAddress);
+        console.log(publicAddress)
         if (publicAddress) router.push("/dashboard");
       }
     };
@@ -47,46 +47,27 @@ export default function Index() {
   };
 
   return (
-    <SafeAreaView className="bg-teal-100">
-      <ScrollView
-        automaticallyAdjustKeyboardInsets={true}
-        contentContainerStyle={{ height: "100%", flexGrow: 1 }}
-      >
+    <SafeAreaView className="bg-white">
+      <ScrollView contentContainerStyle={{ height: "100%" }}>
         <View className="h-full flex items-center justify-between">
-          <View className="flex min-h-[60%] w-full bg-teal-800 rounded-b-[30px] items-center justify-center">
+          <View className="flex basis-2/3 w-full bg-teal-800 rounded-b-lg items-center justify-center">
             <StatusBar style="auto" />
-            <Text className="text-4xl font-bspace text-white">SARVA</Text>
-            <Text className="text-lg tracking-tighter mt-5 font-bspace text-white">
-              IMPORT <Text className="text-yellow-200 ">YOUR WALLET</Text>
-            </Text>
-            <Text className="text-lg tracking-tighter font-space text-white">
-              EXPERIENCE FUTURE
-            </Text>
+            <Text className="text-3xl font-space text-white">Sarva</Text>
           </View>
-          <KeyboardAvoidingView className="min-h-[40%] flex items-center justify-between py-6 w-full">
-            <View className="flex items-center justify-center">
-              <Text className="text-xl text-center font-bspace text-teal-700">
-                IMPORT YOUR WALLET USING PRIVATE KEY
-              </Text>
-              <Text className="text-md text-center font-space text-teal-700">
-                FROM ANY ETHEREUM WALLET
-              </Text>
-            </View>
-
+          <View className="basis-1/3 flex items-center justify-between p-2 m-4 rounded-[30px] w-full">
             <TextInput
               value={privateKey}
               onChangeText={setPrivateKey}
-              placeholder="Paste Your private key"
-              className="bg-white text-lg w-[90%] text-center font-bspace px-4 py-4 rounded-full"
+              placeholder="Enter your private key"
+              className="text-xl font-space text-white border-2 bg-rose-400 border-orange-500 w-full mb-5 px-4 py-2 rounded-[30px]"
             />
             <TouchableOpacity
               onPress={onHandlePress}
-              disabled={privateKey === ""}
-              className="bg-rose-400 w-[90%] flex items-center justify-center px-4 py-6 rounded-full"
+              className="bg-rose-400 w-full flex items-center justify-center px-4 py-4 rounded-[30px]"
             >
-              <Text className="text-xl font-bspace text-black">IMPORT</Text>
+              <Text className="text-xl font-space text-white">Submit</Text>
             </TouchableOpacity>
-          </KeyboardAvoidingView>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>

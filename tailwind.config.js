@@ -4,7 +4,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        space: ["Space-Mono"]
+        space: ["Space-Mono"],
+        bspace: ["Space-Mono-Bold"]
       }
 
     },

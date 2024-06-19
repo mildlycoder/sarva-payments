@@ -1,0 +1,79 @@
+import React, { useState, useEffect } from "react";
+import {
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  TextInput,
+} from "react-native";
+import { router } from "expo-router";
+import RNSecureStorage, {ACCESSIBLE} from 'rn-secure-storage';
+import "react-native-get-random-values";
+import "@ethersproject/shims";
+import { ethers } from "ethers";
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useCredStore } from "../store/credStore";
+export default function Index() {
+  const [privateKey, setPrivateKey] = useState("");
+  const publicAddr = useCredStore((state) => state.publicAddress);
+  const setCreds = useCredStore((state) => state.setCreds);
+  const setLoggedIn = useCredStore((state) => state.setLoggedIn);
+  useEffect(() => {
+    (async () => {
+      try {
+
+        if (credentials) {
+          setIsLoggedIn(true);
+        } else {
+          console.log("No credentials stored");
+        }
+      } catch (error) {
+        console.log("Keychain couldn't be accessed!", error);
+      }
+    })();
+  }, []);
+
+  const onHandlePress = async () => {
+    try {
+      const key = "0x" + privateKey;
+      const publicAddress = ethers.computeAddress(key);
+      setCreds(publicAddress);
+      console.log(publicAddr);
+      console.log(key)
+      RNSecureStorage.setItem("privateKey", key, {accessible: ACCESSIBLE.WHEN_UNLOCKED})
+    } catch (error) {
+      console.error("Error computing address:", error);
+      setPublicAddr("Invalid private key");
+    }
+  };
+
+  return (
+    <SafeAreaView className="bg-teal-800">
+      <ScrollView contentContainerStyle={{ height: "100%" }}>
+        <View className="h-full flex items-center justify-center p-2">
+          <View className="flex items-center justify-center m-4">
+            <StatusBar style="auto" />
+            <Image source={require("../../assets/icon.png")} />
+            <Text className="text-3xl font-space text-white">Sarva</Text>
+          </View>
+          <View className="bg-white flex items-center justify-between p-2 m-4 rounded-[30px] w-full">
+            <TextInput
+              value={privateKey}
+              onChangeText={setPrivateKey}
+              placeholder="Enter your private key"
+              className="text-xl font-space text-white border-2 bg-rose-400 border-orange-500 w-full mb-5 px-4 py-2 rounded-[30px]"
+            />
+            <TouchableOpacity
+              onPress={onHandlePress}
+              className="bg-rose-400 w-full flex items-center justify-center px-4 py-4 rounded-[30px]"
+            >
+              <Text className="text-xl font-space text-white">Submit</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}

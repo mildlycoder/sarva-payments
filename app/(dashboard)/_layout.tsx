@@ -1,13 +1,13 @@
 import { Stack, SplashScreen } from "expo-router";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
-
+import {router} from "expo-router"
+import {Button} from "react-native"
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
+export default function DashboardLayout() {
   const [fontsLoaded, error] = useFonts({
-    "Space-Mono": require("../assets/fonts/SpaceMono-Regular.ttf"),
-    "Space-Mono-Bold": require("../assets/fonts/SpaceMono-Bold.ttf"),
+    "Space-Mono": require("../../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
   useEffect(() => {
@@ -19,13 +19,11 @@ export default function RootLayout() {
   return (
     <Stack>
       <Stack.Screen
-        name="index"
+        name="dashboard"
         options={{
           headerShown: false,
         }}
       />
-      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-      <Stack.Screen name="(dashboard)" options={{ headerShown: false }} />
     </Stack>
   );
 }
