@@ -19,8 +19,14 @@ export default function AuthLayout() {
   if (!fontsLoaded && !error) return null;
   return (
     <Stack>
-      <Stack.Screen
+       <Stack.Screen
         name="sign-in"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="get-details"
         options={{
           headerShown: false,
         }}
