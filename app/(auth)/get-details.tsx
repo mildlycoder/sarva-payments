@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Text,
   View,
@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import * as SMS from "expo-sms";
 import { router } from "expo-router";
+import * as Notifications from "expo-notifications"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import "react-native-get-random-values";
 import "@ethersproject/shims";
@@ -18,6 +19,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useCredStore } from "../store/credStore";
 export default function GetDetails() {
   const [privateKey, setPrivateKey] = useState("");
+  const notificationListener = useRef(null)
+  const responseListener = useRef(null)
   const publicAddr = useCredStore((state: any) => state.publicAddress);
   const setCreds = useCredStore((state: any) => state.setCreds);
   const [isLoading, setLoading] = useState(false);
@@ -40,6 +43,21 @@ export default function GetDetails() {
       console.error("Error computing address:", error);
     }
   };
+
+  useEffect(() => {
+  notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      console.log(notification)
+    });
+  responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+    console.log(response);
+  });
+
+  return () => {
+    Notifications.removeNotificationSubscription(notificationListener.current);
+    Notifications.removeNotificationSubscription(responseListener.current);
+  };
+}, []);
+
 
   return (
     <SafeAreaView className="bg-teal-100">
