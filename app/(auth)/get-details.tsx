@@ -45,9 +45,11 @@ export default function GetDetails() {
   };
 
   useEffect(() => {
+  //@ts-ignore
   notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       console.log(notification)
     });
+//@ts-ignore
   responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
     console.log(response);
   });
